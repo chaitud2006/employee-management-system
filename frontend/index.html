@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management & Task Tracking System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Employee Management System</h1>
+    <nav>
+      <button class="nav-btn active" data-target="dashboard-section">Dashboard</button>
+      <button class="nav-btn" data-target="employees-section">Employees</button>
+      <button class="nav-btn" data-target="tasks-section">Tasks</button>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. DASHBOARD SECTION -->
+    <section id="dashboard-section" class="page-section">
+      <h2>System Dashboard</h2>
+      <div class="stats-grid">
+        <div class="card"><h3 id="stat-total-emp">0</h3><p>Total Employees</p></div>
+        <div class="card"><h3 id="stat-active-emp">0</h3><p>Active Employees</p></div>
+        <div class="card"><h3 id="stat-total-tasks">0</h3><p>Total Tasks</p></div>
+        <div class="card"><h3 id="stat-completed-tasks">0</h3><p>Completed Tasks</p></div>
+      </div>
+    </section>
+
+    <!-- 2. EMPLOYEES SECTION -->
+    <section id="employees-section" class="page-section hidden">
+      <div class="section-header">
+        <h2>Employee Directory</h2>
+        <div class="header-actions">
+          <button id="btn-export-emp" class="btn-secondary">📥 Export CSV</button>
+          <button id="btn-open-emp-modal" class="btn-primary">+ Add Employee</button>
+        </div>
+      </div>
+
+      <!-- Controls: Search & Filter -->
+      <div class="table-controls">
+        <input type="text" id="search-emp" placeholder="🔍 Search employee by name or email..." class="search-input">
+        <select id="filter-dept" class="filter-select">
+          <option value="">All Departments</option>
+        </select>
+      </div>
+
+      <table id="employee-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Department</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="employee-tbody">
+          <!-- Populated via jQuery AJAX -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 3. TASKS SECTION -->
+    <section id="tasks-section" class="page-section hidden">
+      <div class="section-header">
+        <h2>Task Tracker</h2>
+        <div class="header-actions">
+          <button id="btn-export-tasks" class="btn-secondary">📥 Export CSV</button>
+          <button id="btn-open-task-modal" class="btn-primary">+ Add Task</button>
+        </div>
+      </div>
+
+      <!-- Controls: Filter Tasks -->
+      <div class="table-controls">
+        <input type="text" id="search-tasks" placeholder="🔍 Search task title..." class="search-input">
+        <select id="filter-status" class="filter-select">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
+      <table id="task-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Assigned To</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="task-tbody">
+          <!-- Populated via jQuery AJAX -->
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- EMPLOYEE MODAL -->
+  <div id="emp-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="emp-modal-title">Add Employee</h3>
+      <form id="emp-form">
+        <input type="hidden" id="emp-id">
+        <label>First Name</label>
+        <input type="text" id="emp-firstname" required>
+
+        <label>Last Name</label>
+        <input type="text" id="emp-lastname" required>
+
+        <label>Email</label>
+        <input type="email" id="emp-email" required>
+
+        <label>Phone</label>
+        <input type="text" id="emp-phone">
+
+        <label>Department</label>
+        <select id="emp-dept" required></select>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Save Employee</button>
+          <button type="button" class="btn-secondary close-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TASK MODAL -->
+  <div id="task-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="task-modal-title">Add Task</h3>
+      <form id="task-form">
+        <input type="hidden" id="task-id">
+        <label>Title</label>
+        <input type="text" id="task-title" required>
+
+        <label>Description</label>
+        <textarea id="task-desc"></textarea>
+
+        <label>Assign To Employee</label>
+        <select id="task-emp"></select>
+
+        <label>Priority</label>
+        <select id="task-priority">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
+        </select>
+
+        <label>Status</label>
+        <select id="task-status">
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+
+        <label>Due Date</label>
+        <input type="date" id="task-duedate">
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Save Task</button>
+          <button type="button" class="btn-secondary close-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/employees.js"></script>
+  <script src="js/tasks.js"></script>
+</body>
+</html>
